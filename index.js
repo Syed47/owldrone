@@ -9,10 +9,12 @@ server.use(cors())
 server.use(bp.json())
 
 server.use('/', express.static(__dirname + '/public'));
+server.use('/barbara-moore', express.static(__dirname + '/public'));
+server.use('/ozz_dogoun', express.static(__dirname + '/public'));
 
 server.post('/data', (req, res) => {
 
-    const dataToStore = JSON.stringify(req.body) + '|'
+    const dataToStore = JSON.stringify(req.body) + '|\r\n'
     console.log(dataToStore)
 
     fs.appendFileSync(__dirname + '/data.txt', dataToStore)
@@ -36,6 +38,11 @@ server.get('/userData', (req, res) => {
     data.pop()
     res.json(data)
 })
+
+server.get('/alive', (req, res) => {
+    res.json({msg: 'running'})
+})
+
 
 server.listen(PORT, () => {
     console.log(`Server started on port<${PORT}>`)
